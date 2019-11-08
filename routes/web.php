@@ -20,6 +20,8 @@ Route::resource('posts', 'PostsController');
 
 Route::resource('modules', 'ModulesController');
 
+Route::resource('comments', 'CommentsController');
+
 
 Auth::routes();
 

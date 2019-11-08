@@ -19,5 +19,8 @@ class PostsTableSeeder extends Seeder
             $p -> unique_views = 0;
             $p -> save();
         }
+
+        // * Create 50 random posts using the PostFactory
+        factory(App\Post::class, 50)->create();
     }
 }

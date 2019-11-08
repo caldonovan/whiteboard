@@ -38,19 +38,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // * The posts that this user owns
     public function posts() {
-        return $this->hasMany('App\Post');
+        return $this->hasMany(Post::class);
     }
 
-    public function enrolledCourses() {
-        //return $this->hasMany('App\Course');      
+    // * The modules this user is enrolled on
+    public function modules() {
+        return $this->belongsToMany(Module::class);
     }
 
-    public function enrolledModules() {
-        //return $this->hasMany('App\Module');
-    }
-
+    // * The comments this user owns
     public function comments() {
-        //return $this->hasMany('App\Comment');
+        return $this->hasMany(Comment::class);
     }
 }

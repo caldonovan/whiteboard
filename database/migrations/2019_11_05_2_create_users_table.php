@@ -21,21 +21,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('isLecturer')->default(false);
-            //TODO: Add foreign keys for Course, Modules, posts and comments
-            /*$table->unsignedBigInteger('posts')->nullable();
-            $table->unsignedBigInteger('enrolled_modules')->nullable();
-            $table->unsignedBigInteger('enrolled_courses')->nullable();
-            $table->unsignedBigInteger('comments')->nullable();*/
             $table->rememberToken();
             $table->timestamps();
-
-            // * Foreign keys for posts, courses, modules and comments. All of which are nullable
-            //$table->foreign('posts')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade'); // * One to Many
-            //$table->foreign('enrolled_modules')->references('id')->on('modules')->onDelete('cascade')->onUpdate('cascade'); // * Many to Many
-            //$table->foreign('enrolled_courses')->references('id')->on('courses')->onDelete('cascade')->onUpdate('cascade'); // * Many to Many
-            //$table->foreign('comments')->references('id')->on('comments')->onDelete('cascade')->onUpdate('cascade'); // * One to Many
-
-
         });
     }
 
