@@ -16,8 +16,10 @@ class UsersTableSeeder extends Seeder
         $u = new User;
         $u -> name = "John Doe";
         $u -> email = "johndoe@mail.co.uk";
-        $u -> password = "123";
+        $u -> email_verified_at = now();
+        $u -> password = bcrypt('12345678');
         $u -> isLecturer = false;
+        $u -> remember_token = Str::random(10);
         $u -> save();
 
         // Create 50 random users using the UserFactory

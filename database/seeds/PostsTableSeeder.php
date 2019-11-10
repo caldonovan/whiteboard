@@ -12,7 +12,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i <= 10; $i++) {
+        for($i = 0; $i <= 5; $i++) {
             $p = new Post;
             $p -> title = "Example Post " . $i;
             $p -> body = "This is an example post";

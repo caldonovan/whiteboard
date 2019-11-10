@@ -20,8 +20,8 @@ class CreatePostsTable extends Migration
             $table->mediumText('body');
             $table->integer('unique_views')->default(0); // * How many unique views a post has (in the form of a sum of the users who have seen it)
             $table->unsignedBigInteger('user_id')->default(0);
-            // TODO: Add comment foreign key
-            // ? Add attachments
+            $table->string('cover_image')->nullable();
+            $table->string('attachment')->nullable();
             $table->timestamps();
 
         });

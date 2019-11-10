@@ -3,10 +3,10 @@
 @section('content')
 
     <!-- Posts -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h5>Posts</h5></div>
+                <div class="card-header"><h5><b>Posts</b></h5></div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -49,7 +49,7 @@
     <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><h5>Modules</h5></div>
+                    <div class="card-header"><h5><b>Modules</b></h5></div>
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">

@@ -7,6 +7,11 @@ use App\Post;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {   
+        // * Check if user is logged in, except for index and show (post)
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,8 +44,26 @@ class PostsController extends Controller
         // * This ensures the user actually writes something.
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'cover_img' => 'image|nullable|max:1999'
         ]);
+
+        // * Upload File
+        if($request->hasFile('conver_image')) {
+            // * Get file name
+            $filenameWithExt = $request->file('cover_image')->getClientOriginalImage();
+            // * Get file name without extension
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // * Get file extension
+            $ext = $request->file('cover_image')->getClientOriginalExtension();
+            // * Create filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$ext;
+            // * Store file
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+
+        } else {
+            $fileNameToStore = 'noimage.jpeg';
+        }
 
         // * Create the new post and save to the database
         $post = new Post;
@@ -73,6 +96,11 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
+        // * Check if user is logged in & has authorization to edit post
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('error', 'Unauthorized');
+        }
         return view('posts.edit')->with('post', $post);
     }
 
@@ -109,8 +137,12 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        $post->delete();
+        // * Check if user is logged in & has authorization to edit post
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('error', 'Unauthorized');
+        }
 
+        $post->delete();
         return redirect('/posts')->with('success', 'Post Removed');
     }
 }

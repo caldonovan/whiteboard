@@ -18,10 +18,22 @@ class ModulesTableSeeder extends Seeder
             $m -> name = "CSM" . $i;
             $m -> description = "An example module";
             $m -> save();
-            $m->users()->attach(rand(1, 10));
         }
 
-        // * Create 20 random modules using the PostFactory
+        // * Create 20 random modules using the ModuleFactory
         factory(App\Module::class, 20)->create();
+
+        /*
+            foreach(App\User::get() as $user) {
+                dd($user);
+                foreach(App\Module::get() as $module) {
+                    $user->modules()->attach($module->id);
+                    
+                }
+                dd($user);
+                $user->save();
+            }
+        */
+
     }
 }
