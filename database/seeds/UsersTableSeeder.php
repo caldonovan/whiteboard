@@ -23,6 +23,8 @@ class UsersTableSeeder extends Seeder
         $u -> save();
 
         // Create 50 random users using the UserFactory
-        factory(App\User::class, 50)->create();
+        factory(App\User::class, 50)->create()->each(function ($user) {
+            $user->modules()->save(factory(App\Post::class)->make());
+        });
     }
 }

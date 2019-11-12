@@ -2,12 +2,11 @@
 
 namespace App;
 
-use App\Post;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -40,16 +39,16 @@ class User extends Authenticatable
 
     // * The posts that this user owns
     public function posts() {
-        return $this->hasMany(Post::class);
+        return $this->hasMany('App\Post');
     }
 
     // * The modules this user is enrolled on
     public function modules() {
-        return $this->belongsToMany(Module::class);
+        return $this->belongsToMany('App\Module', 'module_user');
     }
 
     // * The comments this user owns
     public function comments() {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany('App\Comment');
     }
 }

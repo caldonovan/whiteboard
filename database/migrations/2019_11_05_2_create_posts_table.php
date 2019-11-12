@@ -18,12 +18,12 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->mediumText('body');
-            $table->integer('unique_views')->default(0); // * How many unique views a post has (in the form of a sum of the users who have seen it)
-            $table->unsignedBigInteger('user_id')->default(0);
+            $table->unsignedBigInteger('user_id');
             $table->string('cover_image')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

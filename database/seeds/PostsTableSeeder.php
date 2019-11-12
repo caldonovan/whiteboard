@@ -12,13 +12,12 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i <= 5; $i++) {
-            $p = new Post;
-            $p -> title = "Example Post " . $i;
-            $p -> body = "This is an example post";
-            $p -> unique_views = 0;
-            $p -> save();
-        }
+        
+        $p = new Post;
+        $p -> title = "Example Post ";
+        $p -> user_id = App\User::inRandomOrder()->first()->id;
+        $p -> body = "This is an example post";
+        $p -> save();
 
         // * Create 50 random posts using the PostFactory
         factory(App\Post::class, 50)->create();

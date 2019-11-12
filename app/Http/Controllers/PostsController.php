@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\PostView;
 
 class PostsController extends Controller
 {
@@ -45,21 +46,21 @@ class PostsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'cover_img' => 'image|nullable|max:1999'
+            'attachment' => 'image|nullable|max:1999'
         ]);
 
         // * Upload File
-        if($request->hasFile('conver_image')) {
+        if($request->hasFile('attachment')) {
             // * Get file name
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalImage();
+            $filenameWithExt = $request->file('attachment')->getClientOriginalImage();
             // * Get file name without extension
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // * Get file extension
-            $ext = $request->file('cover_image')->getClientOriginalExtension();
+            $ext = $request->file('attachment')->getClientOriginalExtension();
             // * Create filename to store
             $fileNameToStore = $filename.'_'.time().'.'.$ext;
             // * Store file
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+            $path = $request->file('attachment')->storeAs('public/attachments', $fileNameToStore);
 
         } else {
             $fileNameToStore = 'noimage.jpeg';
@@ -84,6 +85,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        PostView::createViewLog($post);   
         return view('posts.show')->with('post', $post);
     }
 

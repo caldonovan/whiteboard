@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoursesTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateCoursesTable extends Migration
      */
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
+
             $table->bigIncrements('id');
             $table->string('name');
-            // TODO: Add foreign key for modules
-            // TODO: Add foreign key for enrolled users
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at');
+            $table->string('password');
+            $table->boolean('isLecturer')->default(false);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateCoursesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('users');
     }
 }
