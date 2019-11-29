@@ -11,7 +11,12 @@
             </div>
             </a>
         @endforeach
-        {{$posts->links()}}
+        <div class="row">
+            <div class="col-lg-12">
+                    {{$posts->links()}}
+            </div>
+                            
+        </div>        
     @else
         <p>No Posts Found!</p>
     @endif

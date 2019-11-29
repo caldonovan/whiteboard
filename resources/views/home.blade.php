@@ -56,7 +56,8 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <a href="/modules/create" class="btn btn-primary">Create Post</a>
+                        <!-- TODO: Implement auth check for module CRUD -->
+                        <a href="/modules/create" class="btn btn-primary">Create Module</a>
     
                         @if(count($modules) > 0)
                             @foreach($modules as $module)

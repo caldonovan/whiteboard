@@ -57,7 +57,7 @@ class CommentsController extends Controller
         ]);*/
         
         $user = User::find($user_id);
-        return view('home')->with('posts', $user->posts)->with('modules', $user->modules);
+        return view('posts.show')->with('post', $post);
     }
 
     /**
