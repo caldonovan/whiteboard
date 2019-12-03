@@ -12,7 +12,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600&display=swap" rel="stylesheet">
 
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         
@@ -34,22 +35,24 @@
 <style>
 
         body {
-            background-color: #f3f2f1;
+            /*background-color: #f3f2f1;*/
+            background-color: #fff;
         }
 
         .navbar {
-            box-shadow: 0 6px 23px -6px rgba(0,0,0,.16);
+            font-weight: 500;
         }
 
         h1, h2, h3, h4, h5 {
-            font-family: 'Rubik', serif;
+            font-family: 'Quicksand', serif;
             font-weight: 500;
             text-rendering: geometricPrecision;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'Rubik', sans-serif;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 400;
         }
 
         a, a:hover {
