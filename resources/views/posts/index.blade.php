@@ -18,6 +18,6 @@
                             
         </div>        
     @else
-        <p>No Posts Found!</p>
+        <h1>No Posts Found!</h1>
     @endif
 @endsection

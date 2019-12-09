@@ -12,8 +12,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
 
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         
@@ -21,7 +20,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
         
 
         <script>
@@ -32,7 +31,7 @@
         });
         </script>
 
-<style>
+    <style>
 
         body {
             /*background-color: #f3f2f1;*/
@@ -44,15 +43,15 @@
         }
 
         h1, h2, h3, h4, h5 {
-            font-family: 'Quicksand', serif;
+            font-family: 'PT Sans', serif;
             font-weight: 500;
             text-rendering: geometricPrecision;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 400;
+            font-family: 'PT Sans', sans-serif;
+            font-weight: normal;
         }
 
         a, a:hover {
@@ -61,9 +60,7 @@
         }
 
         .card {
-            box-shadow: 0 6px 23px 0 rgba(0,0,0,.16);
             border-radius: 2px;
-            border-color: transparent;
         }
 
         .card-dark, .card-dark:hover {
@@ -74,8 +71,8 @@
 
         .btn {
             border-radius: 2px;
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
         }
-
 
         /* CSS to animate the posts on mouse over */
         .hvr-grow {
@@ -90,8 +87,7 @@
             -webkit-transform: scale(1.01);
             transform: scale(1.01);
         }
-
-        </style>
+    </style>
 </head>
 <body>
     <div id="app">

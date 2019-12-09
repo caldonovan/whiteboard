@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at');
             $table->string('password');
             $table->boolean('isLecturer')->default(false);
+            $table->string('role');
             $table->rememberToken();
             $table->timestamps();
         });
