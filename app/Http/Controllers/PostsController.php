@@ -31,7 +31,16 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        // * Get the currently logged in user
+        $user = auth()->user();
+        //dd($user);
+
+        // * Check if the user has permissions to create a new post
+        if ($user->can('create', Post::class)) {
+            return view('posts.create');
+        } else {
+            return redirect('/posts')->with('error', 'Unauthorized');
+        }
     }
 
     /**

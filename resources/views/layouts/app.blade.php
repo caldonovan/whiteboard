@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
 
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         
@@ -39,19 +39,20 @@
         }
 
         .navbar {
-            font-weight: 500;
+            font-weight: 400;
         }
 
         h1, h2, h3, h4, h5 {
-            font-family: 'PT Sans', serif;
+            font-family: 'Roboto', serif;
             font-weight: 500;
             text-rendering: geometricPrecision;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
-            font-family: 'PT Sans', sans-serif;
-            font-weight: normal;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            color: rgba(0,0,0,0.87);
         }
 
         a, a:hover {
