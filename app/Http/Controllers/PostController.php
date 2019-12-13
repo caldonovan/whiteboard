@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\PostView;
 
-class PostsController extends Controller
+class PostController extends Controller
 {
     public function __construct()
     {   

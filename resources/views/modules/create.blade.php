@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create Module</h1>
-    {!! Form::open(['action' => 'ModulesController@store', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'ModuleController@store', 'method' => 'POST']) !!}
         <div class="form-group">
             {{Form::label('title', 'Title')}}
             {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title'])}}

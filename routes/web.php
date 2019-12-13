@@ -12,15 +12,15 @@
 */
 
 // * Routing for top level pages
-Route::get('/', 'PagesController@index');
+Route::get('/', 'PageController@index');
 
-Route::get('/modules', 'PagesController@modules');
+Route::get('/modules', 'PageController@modules');
 
-Route::resource('posts', 'PostsController');
+Route::resource('posts', 'PostController');
 
-Route::resource('modules', 'ModulesController');
+Route::resource('modules', 'ModuleController');
 
-Route::resource('comments', 'CommentsController');
+Route::resource('comments', 'CommentController');
 
 
 Auth::routes(['verify' => true]);

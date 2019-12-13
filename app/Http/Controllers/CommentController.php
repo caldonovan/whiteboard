@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 
-class CommentsController extends Controller
+class CommentController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');

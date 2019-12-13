@@ -25,7 +25,7 @@
                                             <small>Posted on {{$post->created_at}} | Views: {{$post->unique_views}}</small>
                                     </div>
                                     <div class="col-md-2 text-center my-auto">
-                                            {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                            {!!Form::open(['action' => ['PostController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                                             {{Form::hidden('_method', 'DELETE')}}
                                             {{Form::submit('Delete', ['class' => 'btn btn-danger ml-2'])}}
                                         {!!Form::close()!!}
@@ -68,7 +68,7 @@
                                                 <h3>{{$module->name}}</h3>
                                         </div>
                                         <div class="col-md-2 text-center my-auto">
-                                                {!!Form::open(['action' => ['ModulesController@destroy', $module->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                                {!!Form::open(['action' => ['ModuleController@destroy', $module->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                                                 {{Form::hidden('_method', 'DELETE')}}
                                                 {{Form::submit('Delete', ['class' => 'btn btn-danger ml-2'])}}
                                             {!!Form::close()!!}

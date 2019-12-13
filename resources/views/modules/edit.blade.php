@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Edit Module</h1>
-    {!! Form::open(['action' => ['ModulesController@update', $module->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['ModuleController@update', $module->id], 'method' => 'POST']) !!}
         <div class="form-group">
             {{Form::label('title', 'Title')}}
             {{Form::text('title', $module->name, ['class' => 'form-control', 'placeholder' => 'Title'])}}

@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create Post</h1>
-    {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'enctype' => 'multipart/data']) !!}
+    {!! Form::open(['action' => 'PostController@store', 'method' => 'POST', 'enctype' => 'multipart/data']) !!}
         <div class="form-group">
             {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title'])}}
         </div>

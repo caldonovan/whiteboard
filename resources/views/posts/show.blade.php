@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                     @if(Auth::check())
-                    {!! Form::open(['action' => 'CommentsController@store', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'CommentController@store', 'method' => 'POST']) !!}
                         <div class="form-group">
                             <h4>{{Form::label('comment', 'Comments')}}</h4>
                             {{Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Comment', 'id' => 'editor'])}}
