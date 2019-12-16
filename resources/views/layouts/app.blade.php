@@ -28,7 +28,9 @@
 
         <!-- VueJS Latest -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        
+
+        <!-- Axios Library -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
         <script>
         tinymce.init({
@@ -101,7 +103,9 @@
         <main>
             @include('inc.navbar')
             <div class="container mt-5 p-0" id="root">
-                <p>@{{ message }}</p>
+                <ul>
+                    <li v-for="post in posts">@{{ post }}</li>
+                </ul>
                 @include('inc.messages')
                 @yield('content')
             </div>
@@ -113,9 +117,20 @@
         var app = new Vue({
             el: "#root",
             data: {
-                message: "Vue is working!"
-            }
+                posts: []
+            },
+            mounted() {
+                axios.get("{{ route ('api.posts.index') }}")
+                .then(response => {
+                    this.posts = response.data;
+                })
+                .catch(response => {
+                    console.log(response);
+                })
+            },
         });
+
+        
     </script>
 </body>
 </html>

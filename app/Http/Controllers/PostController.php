@@ -11,8 +11,14 @@ class PostController extends Controller
     public function __construct()
     {   
         // * Check if user is logged in, except for index and show (post)
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['apiIndex','index', 'show']]);
     }
+
+    public function apiIndex() {
+        $posts = Post::all();
+        return $posts;
+    }
+
     /**
      * Display a listing of the resource.
      *

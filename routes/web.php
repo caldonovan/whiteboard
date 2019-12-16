@@ -11,6 +11,8 @@
 |
 */
 
+// TODO: Clean up routes and ensure each URL takes the user to the correct page
+
 // * Routing for top level pages
 Route::get('/', 'PageController@index');
 
