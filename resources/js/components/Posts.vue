@@ -1,36 +1,30 @@
 <template>
     <div>
-        <h2>These are posts!</h2>
+        <div class="card card-body mb-3" v-for="post in posts" v-bind:key="post.id">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.body }}</p>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     data() {
-        return {
+        return {    
             posts: [],
-            post: {
-                id: "",
-                title: "",
-                body: "",
-                user_id: "",
-                created_at: "",
-                updated_at: ""
-            },
-            post_id: "",
             pagination: [],
             edit: false
         };
     },
     mounted() {
-        axios.get("{{ route ('api.posts.index') }}")
+        axios.get(route('api.posts.index'))
         .then(response => {
-            console.log(response);
+            console.log(response.data);
             this.posts = response.data;
         })
         .catch(response => {
             console.log(response);
-        });
+        })
     }
 };
 </script>

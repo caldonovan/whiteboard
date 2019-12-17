@@ -15,19 +15,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       posts: [],
-      post: {
-        id: "",
-        title: "",
-        body: "",
-        user_id: "",
-        created_at: "",
-        updated_at: ""
-      },
-      post_id: "",
       pagination: [],
       edit: false
     };
@@ -35,8 +29,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("{{ route ('api.posts.index') }}").then(function (response) {
-      console.log(response);
+    axios.get(route('api.posts.index')).then(function (response) {
+      console.log(response.data);
       _this.posts = response.data;
     })["catch"](function (response) {
       console.log(response);
@@ -61,16 +55,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    _vm._l(_vm.posts, function(post) {
+      return _c("div", { key: post.id, staticClass: "card card-body mb-3" }, [
+        _c("h3", [_vm._v(_vm._s(post.title))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(post.body))])
+      ])
+    }),
+    0
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("These are posts!")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

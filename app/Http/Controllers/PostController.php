@@ -30,7 +30,8 @@ class PostController extends Controller
     public function apiIndex()
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(6);
-        return PostResource::collection($posts);
+        // return PostResource::collection($posts);
+        return $posts;
     }
 
     /**
