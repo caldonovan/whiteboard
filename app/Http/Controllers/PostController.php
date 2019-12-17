@@ -5,19 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\PostView;
+use App\Http\Resources\Post as PostResource;
+use Exception;
 
 class PostController extends Controller
 {
     public function __construct()
     {   
         // * Check if user is logged in, except for index and show (post)
-        $this->middleware('auth', ['except' => ['apiIndex','index', 'show']]);
-    }
-
-    // Return all posts for Axios
-    public function apiIndex() {
-        $posts = Post::all();
-        return $posts;
+        $this->middleware('auth', ['except' => ['apiShow', 'apiIndex', 'index', 'show']]);
     }
 
     /**
@@ -29,6 +25,12 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(6);
         return view('posts.index')->with('posts', $posts);
+    }
+
+    public function apiIndex()
+    {
+        $posts = Post::orderBy('created_at', 'desc')->paginate(6);
+        return PostResource::collection($posts);
     }
 
     /**
@@ -101,10 +103,18 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        PostView::createViewLog($post);   
+        try {
+            PostView::createViewLog($post);
+        } catch (Exception $e) {
+            dd($e);
+        } 
         return view('posts.show')->with('post', $post);
     }
 
+    public function apiShow($id) {
+        $post = Post::findOrFail($id); 
+        return new PostResource($post);
+    }
     /**
      * Show the form for editing the specified resource.
      *

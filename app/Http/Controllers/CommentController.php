@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Post;
 use App\User;
+use App\Http\Resources\Comment as CommentResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth', ['except' => ['apiIndex']]);
+        $this->middleware('auth', ['except' => ['index']]);
     }
     /**
      * Display a listing of the resource.
@@ -20,7 +21,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        // Get Comments
+        $comments = Comment::paginate(15);
+        return CommentResource::collection($comments);
     }
 
     /**

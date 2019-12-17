@@ -27,11 +27,8 @@
     <!-- MaterialDB JS -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
 
-    <!-- VueJS Latest -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <!-- Axios Library -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 
     <script>
         tinymce.init({
@@ -100,35 +97,16 @@
     </style>
 </head>
 <body>
-    <div id="app">
+    <div>
         <main>
             @include('inc.navbar')
-            <div class="container mt-5 p-0" id="root">
+            <div class="container mt-5 p-0" id="app">
                 @include('inc.messages')
                 @yield('content')
             </div>
             
         </main>
     </div>
-
-    <script>
-        var app = new Vue({
-            el: "#root",
-            data: {
-                comments: []
-            },
-            mounted() {
-                axios.get("{{ route ('api.comments.index') }}")
-                .then(response => {
-                    this.comments = response.data;
-                })
-                .catch(response => {
-                    console.log(response);
-                })
-            },
-        });
-
-        
-    </script>
+    <script src="{{ asset('js/app.js') }}"></script>    
 </body>
 </html>
