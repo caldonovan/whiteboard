@@ -11,7 +11,7 @@ use App\Http\Requests\CommentRequest;
 class CommentController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['apiIndex']]);
     }
     /**
      * Display a listing of the resource.
@@ -49,12 +49,6 @@ class CommentController extends Controller
         $comment -> user_id = $user_id;
         $comment -> body = $request->body;
         $comment -> save();
-
-        /*Comment::create([
-            'post_id' => $post->id,            
-            'user_id' => auth()->user()->id,
-            'body' => $request->body
-        ]);*/
         
         $user = User::find($user_id);
         return view('posts.show')->with('post', $post);

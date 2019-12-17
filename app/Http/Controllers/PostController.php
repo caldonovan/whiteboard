@@ -14,6 +14,7 @@ class PostController extends Controller
         $this->middleware('auth', ['except' => ['apiIndex','index', 'show']]);
     }
 
+    // Return all posts for Axios
     public function apiIndex() {
         $posts = Post::all();
         return $posts;

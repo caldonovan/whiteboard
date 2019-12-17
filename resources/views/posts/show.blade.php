@@ -32,6 +32,9 @@
                         <hr>
                     @empty
                         <p>This post has no comments</p>
+                        <ul>
+                        <li v-for="comment in comments">@{{ comment }}</li>
+                        </ul>
                     @endforelse
             </div>
         </div>
