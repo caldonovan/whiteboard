@@ -15,27 +15,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                    @if(Auth::check())
-                    {!! Form::open(['action' => 'CommentController@store', 'method' => 'POST']) !!}
-                        <div class="form-group">
-                            <h4>{{Form::label('comment', 'Comments')}}</h4>
-                            {{Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Comment', 'id' => 'editor'])}}
-                        </div>
-                        {{Form::hidden('post_id', $post->id)}}
-                        {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
-                    {!! Form::close() !!}
-                    <hr>
-                    @endif
-                    @forelse ($post->comments as $comment)
-                        <p><b>{{ $comment->user->name }} | {{ \Carbon\Carbon::parse($comment->created_at)->format('d/m/Y')}} at {{ \Carbon\Carbon::parse($comment->created_at)->format('H:m:s')}}</b></p>
-                        <p>{!! $comment->body !!}</p>
-                        <hr>
-                    @empty
-                        <p>This post has no comments</p>
-                        <ul>
-                        <li v-for="comment in comments">@{{ comment }}</li>
-                        </ul>
-                    @endforelse
+                <comments bearer-token={{ $token }} post-id="{{ $post->id }}"></comments>
             </div>
         </div>
 @endsection

@@ -12,7 +12,7 @@ use App\Http\Requests\CommentRequest;
 class CommentController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth', ['except' => ['index']]);
+        $this->middleware('auth', ['except' => ['index', 'apiIndex']]);
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +22,14 @@ class CommentController extends Controller
     public function index()
     {
         // Get Comments
-        $comments = Comment::paginate(15);
+        $comments = Comment::all();
         return CommentResource::collection($comments);
+    }
+
+    public function apiIndex($id) 
+    {
+        $comments = Comment::where('post_id', $id)->get();
+        return $comments;
     }
 
     /**
@@ -55,6 +61,22 @@ class CommentController extends Controller
         
         $user = User::find($user_id);
         return view('posts.show')->with('post', $post);
+    }
+
+    public function apiStore(Request $request) {
+        $uid = auth()->user()->id;
+        if($uid === null) {
+            $uid = 1;
+            dump("No UID Found!!");
+        }
+        $post = Post::findOrFail($request['post_id']);
+        $c = new Comment;
+        $c -> post_id = $post->id;
+        $c -> user_id = $uid;
+        $c -> user_name = User::where('id', $uid)->value('name');
+        $c -> body = $request->body;
+        $c -> save();
+        return $c;
     }
 
     /**

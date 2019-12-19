@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
         $a -> email = "johndoe@mail.co.uk";
         $a -> email_verified_at = now();
         $a -> password = bcrypt('12345678');
+        $a -> api_token = Str::random(80);
         $a -> isLecturer = true;
         $a -> isAdmin = true;
         $a -> remember_token = Str::random(10);
@@ -29,6 +30,7 @@ class UsersTableSeeder extends Seeder
         $u -> email = "janedoe@mail.co.uk";
         $u -> email_verified_at = now();
         $u -> password = bcrypt('12345678');
+        $u -> api_token = Str::random(80);
         $u -> isLecturer = false;
         $u -> isAdmin = false;
         $u -> remember_token = Str::random(10);

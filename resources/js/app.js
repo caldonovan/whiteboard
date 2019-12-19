@@ -7,6 +7,8 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+window.axios = require("axios");
+window.nprogress = require("nprogress");
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,7 +23,7 @@ window.Vue = require("vue");
 
 // Vue.component("posts", require("./components/Posts.vue").default);
 
-Vue.component("posts", () => import("./components/Posts.vue"));
+Vue.component("comments", () => import("./components/Comments.vue")).default;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

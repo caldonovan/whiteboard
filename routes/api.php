@@ -17,14 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// List Comments
-Route::get('comments', 'CommentController@index');
+Route::get('posts/', 'PostController@apiIndex')->name('api.posts.index');
 
-// Create Comment
-Route::get('comment', 'CommentController@apiStore');
+Route::get('comments/', 'CommentController@index')->name('api.comments.showAll');
 
-// List Posts
-Route::get('posts', 'PostController@apiIndex')->name('api.posts.index');
+// Show comments for particular post
+Route::get('comments/{post_id}', 'CommentController@apiIndex')->name('api.comments.show');
 
-// Show Post
-Route::get('posts/{id}', 'PostController@apiShow');
+// Store new comment on particular post
+Route::post('comments/store', 'CommentController@apiStore')->name('api.comments.store')->middleware('auth:api');
