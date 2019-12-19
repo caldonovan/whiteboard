@@ -110,7 +110,20 @@ class CommentController extends Controller
      */
     public function apiUpdate(Request $request, $id)
     {
-        $comment = Comment::find($comment->id);
+        try {
+            $comment = Comment::find($id);
+            if(auth()->user()->id != $comment->user_id) {
+                return response()->json("You are not authorized to modify this comment!");
+            }
+            // update comment
+            $comment->body = $request->body;
+            $comment->updated_at = date('Y-m-d H:i:s');
+            $comment->update();
+        }
+        catch(Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+        
     }
 
     /**

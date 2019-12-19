@@ -13,7 +13,7 @@
                     {!!$post->body!!}
             </div>
         </div>
-        <div class="card">
+        <div class="card mb-5">
             <div class="card-body">
                 <comments user-id={{ $user->id }} bearer-token={{ $token }} post-id="{{ $post->id }}"></comments>
             </div>

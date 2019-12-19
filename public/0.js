@@ -93,11 +93,16 @@ $(function () {
         });
         NProgress.done();
       } else {
-        axios.put(route('api.comments.update'), {
+        axios.put(route('api.comments.update', {
+          id: this.comment_id
+        }), {
           api_token: this.bearerToken,
           post_id: this.postId,
-          body: this.comment
-        }).then(function (response) {//
+          body: this.comment_body
+        }).then(function (response) {
+          console.log("Comment Updated!");
+          _this2.edit = false;
+          _this2.comment_body = '', _this2.comment_id = '', _this2.fetchComments();
         })["catch"](function (error) {
           console.log(error);
         });
@@ -206,7 +211,7 @@ var render = function() {
           _c("p", [
             _c("b", [_vm._v(_vm._s(comment.user_name))]),
             _vm._v(" | "),
-            _c("small", [_vm._v(_vm._s(comment.created_at))])
+            _c("small", [_vm._v(_vm._s(comment.updated_at))])
           ]),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(comment.body))]),

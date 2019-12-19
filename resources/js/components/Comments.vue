@@ -7,7 +7,7 @@
             <button class="btn btn-primary" @click.prevent="createComment">Submit</button>
         </form>
         <div v-for="comment in comments" v-bind:key="comment.id" v-bind:id="comment.id">
-            <p><b>{{ comment.user_name }}</b> | <small>{{ comment.created_at }}</small></p>
+            <p><b>{{ comment.user_name }}</b> | <small>{{ comment.updated_at }}</small></p>
             <p>{{ comment.body }}</p>
             <button v-if="user_id == comment.user_id" @click.prevent="editComment(comment)" class="btn btn-sm btn-deep-orange">
                 <svg class="bi bi-pencil" width="2.5em" height="2.5em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -80,13 +80,17 @@ export default {
                 })
                 NProgress.done();
             } else {
-                axios.put(route('api.comments.update'), {
+                axios.put(route('api.comments.update', {id: this.comment_id}), {
                     api_token: this.bearerToken,
                     post_id: this.postId,
-                    body: this.comment
+                    body: this.comment_body
                 })
                 .then(response => {
-                    //
+                    console.log("Comment Updated!");
+                    this.edit = false;
+                    this.comment_body = '',
+                    this.comment_id= '',
+                    this.fetchComments();
                 })
                 .catch(error => {
                     console.log(error);
