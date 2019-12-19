@@ -26,3 +26,9 @@ Route::get('comments/{post_id}', 'CommentController@apiIndex')->name('api.commen
 
 // Store new comment on particular post
 Route::post('comments/store', 'CommentController@apiStore')->name('api.comments.store')->middleware('auth:api');
+
+// Update comment
+Route::put('comments/update', 'CommentController@apiUpdate')->name('api.comments.update')->middleware('auth:api');
+
+// Delete comment
+Route::delete('comments/delete/{id}', 'CommentController@apiDelete')->name('api.comments.delete')->middleware('auth:api');

@@ -40,25 +40,18 @@ $(function () {
   NProgress.start();
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['postId', 'bearerToken'],
+  props: ['postId', 'bearerToken', 'userId'],
   data: function data() {
     return {
       comments: [],
-      newCommentBody: '',
+      comment_id: '',
+      comment_body: '',
+      user_id: this.userId,
       edit: false
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get(route('api.comments.show', {
-      post_id: this.postId
-    })).then(function (response) {
-      console.log(response.data);
-      _this.comments = response.data;
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    this.fetchComments();
   },
   updated: function updated() {
     this.$nextTick(function () {
@@ -67,25 +60,79 @@ $(function () {
     });
   },
   methods: {
+    fetchComments: function fetchComments() {
+      var _this = this;
+
+      console.log(this.user_id);
+      axios.get(route('api.comments.show', {
+        post_id: this.postId
+      })).then(function (response) {
+        console.log(response.data);
+        _this.comments = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     createComment: function createComment() {
       var _this2 = this;
 
       NProgress.start();
       console.log(this.bearerToken);
-      axios.post(route('api.comments.store'), {
-        api_token: this.bearerToken,
-        post_id: this.postId,
-        body: this.newCommentBody
-      }).then(function (response) {
-        _this2.comments.push(response.data);
 
-        _this2.newCommentBody = '';
+      if (this.edit == false) {
+        axios.post(route('api.comments.store'), {
+          api_token: this.bearerToken,
+          post_id: this.postId,
+          body: this.comment_body
+        }).then(function (response) {
+          _this2.comments.push(response.data);
+
+          _this2.comment_body = '';
+        })["catch"](function (error) {
+          console.log(error);
+        });
+        NProgress.done();
+      } else {
+        axios.put(route('api.comments.update'), {
+          api_token: this.bearerToken,
+          post_id: this.postId,
+          body: this.comment
+        }).then(function (response) {//
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    deleteComment: function deleteComment(id) {
+      var _this3 = this;
+
+      NProgress.start();
+      var token = this.bearerToken;
+      console.log(id);
+      axios["delete"](route('api.comments.delete', {
+        id: id
+      }), {
+        params: {
+          'id': id
+        },
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(function (response) {
+        console.log("Delete successful!");
+
+        _this3.fetchComments();
       })["catch"](function (error) {
         console.log(error);
       });
-      NProgress.stop();
     },
-    editComment: function editComment() {// Write comment to db for updateS
+    editComment: function editComment(comment) {
+      console.log(this.bearerToken + this.user_id + this.comment_body + this.comment_id);
+      this.edit = true;
+      this.comment_id = comment.id;
+      this.comment_body = comment.body;
+    },
+    updateComment: function updateComment() {// Update comment after edit
     }
   }
 });
@@ -117,19 +164,23 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.newCommentBody,
-                expression: "newCommentBody"
+                value: _vm.comment_body,
+                expression: "comment_body"
               }
             ],
             staticClass: "form-control",
-            attrs: { name: "commentBody", id: "editor" },
-            domProps: { value: _vm.newCommentBody },
+            attrs: {
+              placeholder: "Post a new comment...",
+              name: "comment_body",
+              id: "editor"
+            },
+            domProps: { value: _vm.comment_body },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.newCommentBody = $event.target.value
+                _vm.comment_body = $event.target.value
               }
             }
           })
@@ -151,7 +202,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
-        return _c("div", { key: comment.id }, [
+        return _c("div", { key: comment.id, attrs: { id: comment.id } }, [
           _c("p", [
             _c("b", [_vm._v(_vm._s(comment.user_name))]),
             _vm._v(" | "),
@@ -160,90 +211,94 @@ var render = function() {
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(comment.body))]),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-deep-orange",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.editComment($event)
-                }
-              }
-            },
-            [
-              _c(
-                "svg",
+          _vm.user_id == comment.user_id
+            ? _c(
+                "button",
                 {
-                  staticClass: "bi bi-pencil",
-                  attrs: {
-                    width: "2.5em",
-                    height: "2.5em",
-                    viewBox: "0 0 20 20",
-                    fill: "currentColor",
-                    xmlns: "http://www.w3.org/2000/svg"
+                  staticClass: "btn btn-sm btn-deep-orange",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.editComment(comment)
+                    }
                   }
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      "fill-rule": "evenodd",
-                      d:
-                        "M13.293 3.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM14 4l2 2-9 9-3 1 1-3 9-9z",
-                      "clip-rule": "evenodd"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    attrs: {
-                      "fill-rule": "evenodd",
-                      d:
-                        "M14.146 8.354l-2.5-2.5.708-.708 2.5 2.5-.708.708zM5 12v.5a.5.5 0 00.5.5H6v.5a.5.5 0 00.5.5H7v.5a.5.5 0 00.5.5H8v-1.5a.5.5 0 00-.5-.5H7v-.5a.5.5 0 00-.5-.5H5z",
-                      "clip-rule": "evenodd"
-                    }
-                  })
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "bi bi-pencil",
+                      attrs: {
+                        width: "2.5em",
+                        height: "2.5em",
+                        viewBox: "0 0 20 20",
+                        fill: "currentColor",
+                        xmlns: "http://www.w3.org/2000/svg"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M13.293 3.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM14 4l2 2-9 9-3 1 1-3 9-9z",
+                          "clip-rule": "evenodd"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M14.146 8.354l-2.5-2.5.708-.708 2.5 2.5-.708.708zM5 12v.5a.5.5 0 00.5.5H6v.5a.5.5 0 00.5.5H7v.5a.5.5 0 00.5.5H8v-1.5a.5.5 0 00-.5-.5H7v-.5a.5.5 0 00-.5-.5H5z",
+                          "clip-rule": "evenodd"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
-            ]
-          ),
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-danger",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.editComment($event)
-                }
-              }
-            },
-            [
-              _c(
-                "svg",
+          _vm.user_id == comment.user_id
+            ? _c(
+                "button",
                 {
-                  staticClass: "bi bi-trash-fill",
-                  attrs: {
-                    width: "2.5em",
-                    height: "2.5em",
-                    viewBox: "0 0 20 20",
-                    fill: "currentColor",
-                    xmlns: "http://www.w3.org/2000/svg"
+                  staticClass: "btn btn-sm btn-danger",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteComment(comment.id)
+                    }
                   }
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      "fill-rule": "evenodd",
-                      d:
-                        "M4.5 3a1 1 0 00-1 1v1a1 1 0 001 1H5v9a2 2 0 002 2h6a2 2 0 002-2V6h.5a1 1 0 001-1V4a1 1 0 00-1-1H12a1 1 0 00-1-1H9a1 1 0 00-1 1H4.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM10 7a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 0110 7zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z",
-                      "clip-rule": "evenodd"
-                    }
-                  })
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "bi bi-trash-fill",
+                      attrs: {
+                        width: "2.5em",
+                        height: "2.5em",
+                        viewBox: "0 0 20 20",
+                        fill: "currentColor",
+                        xmlns: "http://www.w3.org/2000/svg"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M4.5 3a1 1 0 00-1 1v1a1 1 0 001 1H5v9a2 2 0 002 2h6a2 2 0 002-2V6h.5a1 1 0 001-1V4a1 1 0 00-1-1H12a1 1 0 00-1-1H9a1 1 0 00-1 1H4.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM10 7a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 0110 7zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z",
+                          "clip-rule": "evenodd"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
-            ]
-          ),
+            : _vm._e(),
           _vm._v(" "),
           _c("hr")
         ])

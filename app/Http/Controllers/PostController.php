@@ -104,20 +104,22 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        $user;
         try {
-            $token = auth()->user()->api_token;
+            $user = auth()->user();
         }
         catch (Exception $e) {
             dump("User not logged in!");
             return redirect('/login');
         }
+        $token = $user->api_token;
         
         try {
             PostView::createViewLog($post);
         } catch (Exception $e) {
             dd($e);
         } 
-        return view('posts.show')->with('post', $post)->with('token', $token);
+        return view('posts.show')->with('post', $post)->with('token', $token)->with('user', $user);
     }
 
     public function apiShow($id) {

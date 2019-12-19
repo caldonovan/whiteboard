@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class PostView extends Model
 {
@@ -28,14 +29,11 @@ class PostView extends Model
             $pv->post_id = $post->id;
             $pv->url = \Request::url();
             $pv->session_id = \Request::getSession()->getId();
-            $pv->user_id = (\Auth::check()) ? \Auth::id():null;
+            $pv->user_id = (Auth::check()) ? Auth::id():null;
             $pv->ip = \Request::getClientIp();
             $pv->agent = \Request::header('User-Agent');
             $pv->save();
         }
-        else {
-            dump("Record Exists");
-        }        
     }
 
     public function post() {

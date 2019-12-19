@@ -108,9 +108,9 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function apiUpdate(Request $request, $id)
     {
-        //
+        $comment = Comment::find($comment->id);
     }
 
     /**
@@ -119,8 +119,28 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function apiDelete($id)
     {
-        //
+
+        try {
+            $comment = Comment::findOrFail($id);
+            if(auth()->user()->id != $comment->user_id) {
+                return response()->json("You are not authorized to delete this comment!");
+            }
+            $comment->delete();
+            return response()->json("Comment Deleted");
+        }
+        catch(Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+
+        //dd($request);
+        //$comment = Comment::findOrFail($request->id);
+        //if(auth()->user()->id != $comment->id) {
+        //    return alert("You are not authorised to delete this comment!");
+       // }
+        //$comment->delete();
+        //dd($comment);
+        //return $comment;
     }
 }
