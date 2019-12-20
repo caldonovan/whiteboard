@@ -4,8 +4,8 @@
     <h1>Create Module</h1>
     {!! Form::open(['action' => 'ModuleController@store', 'method' => 'POST']) !!}
         <div class="form-group">
-            {{Form::label('title', 'Title')}}
-            {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title'])}}
+            {{Form::label('code', 'Module Code')}}
+            {{Form::text('code', '', ['class' => 'form-control', 'placeholder' => 'Module Code...'])}}
         </div>
         <div class="form-group">
                 {{Form::label('description', 'Description')}}

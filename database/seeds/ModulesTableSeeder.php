@@ -14,7 +14,7 @@ class ModulesTableSeeder extends Seeder
     {
         // Hard coded module for control test.
         $m = new Module;
-        $m -> name = "CSM01";
+        $m -> code = "CSM01";
         $m -> description = "An example module";
         $m -> save();
 

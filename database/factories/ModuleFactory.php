@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Module::class, function (Faker $faker) {
     return [
-        'name' => $faker->numerify('CSM###'),
+        'code' => $faker->numerify('CSM###'),
         'description' => $faker->paragraph
     ];
 });

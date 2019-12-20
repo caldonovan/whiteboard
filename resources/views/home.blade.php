@@ -57,15 +57,17 @@
                             </div>
                         @endif
                         <!-- TODO: Implement auth check for module CRUD -->
-                        <a href="/modules/create" class="btn btn-primary">Create Module</a>
-    
+                        @if(Auth::user()->isLecturer == 1)
+                            <a href="/modules/create" class="btn btn-primary">Create Module</a>
+                        @endif
                         @if(count($modules) > 0)
                             @foreach($modules as $module)
                             <a href="/modules/{{$module->id}}/edit" class="card card-dark my-3 hvr-grow">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-10">
-                                                <h3>{{$module->name}}</h3>
+                                                <h3>{{$module->code}}</h3>
+                                        <p>{{$module->description}}</p>
                                         </div>
                                         <div class="col-md-2 text-center my-auto">
                                                 {!!Form::open(['action' => ['ModuleController@destroy', $module->id], 'method' => 'POST', 'class' => 'pull-right'])!!}

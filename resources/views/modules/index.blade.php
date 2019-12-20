@@ -6,7 +6,7 @@
         @foreach($modules as $module)
             <a href="/modules/{{$module->id}}" class="card my-3 hvr-grow">
             <div class="card-body">
-                <h3>{{$module->name}}</h3>
+                <h3>{{$module->code}}</h3>
                 <small>{{$module->description}}</small>
             </div>
             </a>

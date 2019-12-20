@@ -4,7 +4,7 @@
             <div class="form-group">
                 <textarea class="form-control" placeholder="Post a new comment..." name="comment_body" id="editor" v-model="comment_body"></textarea>
             </div>
-            <button class="btn btn-primary" @click.prevent="createComment">Submit</button>
+            <button class="btn btn-dark-green" @click.prevent="createComment">Submit</button>
         </form>
         <div v-for="comment in comments" v-bind:key="comment.id" v-bind:id="comment.id">
             <p><b>{{ comment.user_name }}</b> | <small>{{ comment.updated_at }}</small></p>

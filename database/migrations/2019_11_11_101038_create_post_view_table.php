@@ -22,8 +22,6 @@ class CreatePostViewTable extends Migration
             $table->string('ip');
             $table->string('agent');
             $table->timestamps();
-
-            $table->foreign('post_id')->references('id')->on('posts');
         });
     }
 

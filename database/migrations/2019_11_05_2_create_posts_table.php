@@ -19,11 +19,10 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->mediumText('body');
             $table->unsignedBigInteger('user_id');
-            $table->string('cover_image')->nullable();
-            $table->string('attachment')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

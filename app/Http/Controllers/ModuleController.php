@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Module;
+use App\ModuleUser;
+use DB;
 
 class ModuleController extends Controller
 {
@@ -14,7 +16,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $modules = Module::orderBy('name', 'asc')->paginate(6);
+        $modules = Module::orderBy('code', 'asc')->paginate(6);
         return view('modules.index')->with('modules', $modules);
     }
 
@@ -38,12 +40,12 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'code' => 'required',
             'description' => 'required'
         ]);
 
         $module = new Module;
-        $module->title = $request->input('title');
+        $module->title = $request->input('code');
         $module->description = $request->input('description');
         $module->save();
 
@@ -59,6 +61,10 @@ class ModuleController extends Controller
     public function show($id)
     {
         $module = Module::find($id);
+        //$module_users = DB::table('module_user')->where('module_id', $id)->get()->toArray();
+        //dd($module_users);
+        //$users = DB::table('users')->where('user_id', '')->value('name');
+        //dd($users);
         return view('modules.show')->with('module', $module);
     }
 
@@ -85,13 +91,13 @@ class ModuleController extends Controller
     {
         // * This ensures the user actually writes something.
         $this->validate($request, [
-            'title' => 'required',
+            'code' => 'required',
             'description' => 'required'
         ]);
 
         // * Create the new post and save to the database
         $module = Module::find($id);
-        $module->name = $request->input('title');
+        $module->code = $request->input('code');
         $module->description = $request->input('description');
         $module->save();
 

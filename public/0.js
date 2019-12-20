@@ -194,7 +194,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-primary",
+            staticClass: "btn btn-dark-green",
             on: {
               click: function($event) {
                 $event.preventDefault()

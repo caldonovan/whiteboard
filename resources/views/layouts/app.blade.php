@@ -78,6 +78,10 @@
             box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
         }
 
+        .btn-sm {
+            padding: 0;
+        }
+
         /* css to animate the posts on mouse over */
         .hvr-grow {
             -webkit-transform: perspective(1px) translateZ(0);
@@ -97,6 +101,7 @@
     <div>
         <main>
             @include('inc.navbar')
+            @include('inc.messages')
             <div class="container mt-5 p-0" id="app">
                 @yield('content')
             </div>

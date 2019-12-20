@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\PostView;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Post as PostResource;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -65,21 +68,21 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'attachment' => 'image|nullable|max:1999'
+            'image' => 'image|nullable|max:1999'
         ]);
-
         // * Upload File
-        if($request->hasFile('attachment')) {
+        if($request->hasFile('image')) {
             // * Get file name
-            $filenameWithExt = $request->file('attachment')->getClientOriginalImage();
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
             // * Get file name without extension
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // * Get file extension
-            $ext = $request->file('attachment')->getClientOriginalExtension();
-            // * Create filename to store
+            $ext = $request->file('image')->getClientOriginalExtension();
+            // * Create filename to store (avoids filename clashing)
             $fileNameToStore = $filename.'_'.time().'.'.$ext;
             // * Store file
-            $path = $request->file('attachment')->storeAs('public/attachments', $fileNameToStore);
+            $fileNameToStore = str_replace(' ', '', $fileNameToStore);
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
 
         } else {
             $fileNameToStore = 'noimage.jpeg';
@@ -90,9 +93,10 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id; // * Grab logged in users 'id' and assign to new post.
+        $post->image = $fileNameToStore;
         $post->save();
 
-        return redirect('/posts')->with('success', 'Post Created');
+        return redirect('/posts/'.$post->id)->with('success', 'Post Created');
     }
 
     /**
@@ -104,27 +108,22 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $user;
-        try {
-            $user = auth()->user();
+        $author = User::where('id', $post->user_id)->value('name');
+        if(Auth::guest()) {
+            $user = null;
+            $token = null;
         }
-        catch (Exception $e) {
-            dump("User not logged in!");
-            return redirect('/login');
-        }
-        $token = $user->api_token;
+        else {
+            $user = Auth::user();
+            $token = $user->api_token;
+        }       
         
         try {
             PostView::createViewLog($post);
         } catch (Exception $e) {
             dd($e);
         } 
-        return view('posts.show')->with('post', $post)->with('token', $token)->with('user', $user);
-    }
-
-    public function apiShow($id) {
-        $post = Post::findOrFail($id); 
-        return new PostResource($post);
+        return view('posts.show')->with('post', $post)->with('token', $token)->with('user', $user)->with('author', $author);
     }
     /**
      * Show the form for editing the specified resource.
@@ -137,7 +136,7 @@ class PostController extends Controller
         $post = Post::find($id);
 
         // * Check if user is logged in & has authorization to edit post
-        if(auth()->user()->id !== $post->user_id){
+        if(Auth::user()->id !== $post->user_id){
             return redirect('/posts')->with('error', 'Unauthorized');
         }
         return view('posts.edit')->with('post', $post);
@@ -155,16 +154,36 @@ class PostController extends Controller
         // * This ensures the user actually writes something.
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'image|nullable|max:1999'
         ]);
+
+        // * Upload File
+        if($request->hasFile('image')) {
+            // * Get file name
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            // * Get file name without extension
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // * Get file extension
+            $ext = $request->file('image')->getClientOriginalExtension();
+            // * Create filename to store (avoids filename clashing)
+            $fileNameToStore = $filename.'_'.time().'.'.$ext;
+            // * Store file
+            $fileNameToStore = str_replace(' ', '', $fileNameToStore);
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+
+        } else {
+            $fileNameToStore = 'noimage.jpeg';
+        }
 
         // * Create the new post and save to the database
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->save();
+        $post->image = $fileNameToStore;
+        $post->update();
 
-        return redirect('/posts')->with('success', 'Post Updated');
+        return redirect('/posts/'.$id)->with('success', 'Post Updated');
     }
 
     /**
@@ -177,11 +196,11 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         // * Check if user is logged in & has authorization to edit post
-        if(auth()->user()->id !== $post->user_id){
-            return redirect('/posts')->with('error', 'Unauthorized');
+        if(Auth::user()->id !== $post->user_id){
+            return redirect('/home')->with('error', 'Unauthorized');
         }
 
         $post->delete();
-        return redirect('/posts')->with('success', 'Post Removed');
+        return redirect('/home')->with('success', 'Post Removed');
     }
 }

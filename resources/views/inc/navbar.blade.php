@@ -1,7 +1,11 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark">
     <div class="container">
-            <a class="navbar-brand" href="/home">Whiteboard</a>
+            @if(Auth::user())
+                <a class="navbar-brand" href="/home">Whiteboard</a>
+            @else
+                <a class="navbar-brand" href="/">Whiteboard</a>
+            @endif
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -9,7 +13,11 @@
               <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="/modules">Modules <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="/posts">Posts</a>
-                <a class="nav-item nav-link" href="/posts/create">Create Post</a>
+                @if(Auth::guest())
+
+                @elseif(Auth::user()->isLecturer == 1)
+                  <a class="nav-item nav-link" href="/posts/create">Create Post</a>
+                @endif
               </div>
               <div class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
