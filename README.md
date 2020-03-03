@@ -1,4 +1,4 @@
-# Shiteboard
+# Whiteboard
 
 A Laravel application that rips off Blackboard cause I had no other ideas.
 
