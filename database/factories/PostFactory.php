@@ -1,17 +1,21 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Post;
-use Faker\Generator as Faker;
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Post::class, function (Faker $faker) {
-    return [
-        'title' => $faker->words(4, true),
-        'body' => $faker->text(),
-        'user_id' => function() {
-            //return array_rand(DB::table('users')->pluck('id')->toArray());
-            return App\User::inRandomOrder()->first()->id;
-        }
-    ];
-});
+class PostFactory extends Factory
+{
+    protected $model = Post::class;
+
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->words(4, true),
+            'body' => $this->faker->text(),
+            'user_id' => User::inRandomOrder()->first()->id,
+        ];
+    }
+}

@@ -1,13 +1,19 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Module;
-use Faker\Generator as Faker;
+use App\Models\Module;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Module::class, function (Faker $faker) {
-    return [
-        'code' => $faker->numerify('CSM###'),
-        'description' => $faker->paragraph
-    ];
-});
+class ModuleFactory extends Factory
+{
+    protected $model = Module::class;
+
+    public function definition()
+    {
+        return [
+            'code' => $this->faker->numerify('CSM###'),
+            'description' => $this->faker->paragraph(),
+        ];
+    }
+}

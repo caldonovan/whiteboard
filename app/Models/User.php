@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -11,6 +12,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -37,21 +39,24 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'roles' => 'array'
+        'roles' => 'array',
     ];
 
     // * The posts that this user owns
-    public function posts() {
-        return $this->hasMany('App\Post');
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post');
     }
 
     // * The modules this user is enrolled on
-    public function modules() {
-        return $this->belongsToMany('App\Module', 'module_user');
+    public function modules()
+    {
+        return $this->belongsToMany('App\Models\Module', 'module_user');
     }
 
     // * The comments this user owns
-    public function comments() {
-        return $this->hasMany('App\Comment');
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
     }
 }
