@@ -11,9 +11,10 @@
 |
 */
 
-// TODO: Clean up routes and ensure each URL takes the user to the correct page
+Route::get('/v', function () {
+    return "Laravel Framework: " . app()->version();
+});
 
-// * Routing for top level pages
 Route::get('/', 'PageController@index');
 
 Route::get('/modules', 'PageController@modules');
