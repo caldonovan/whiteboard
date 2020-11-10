@@ -26,6 +26,7 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
+        "onecentlin/laravel-adminer": "4.7.7.1",
         "phpunit/phpunit": "^9.0"
     },
     "config": {

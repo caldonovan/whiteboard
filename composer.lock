@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba06d3f70f96313dfa4c9c2b137760db",
+    "content-hash": "4935aee800379c19db4444b543564f73",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6649,6 +6649,60 @@
                 }
             ],
             "time": "2020-10-29T14:50:40+00:00"
+        },
+        {
+            "name": "onecentlin/laravel-adminer",
+            "version": "4.7.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/onecentlin/laravel-adminer.git",
+                "reference": "a3b94d480326a3db0b5b2eb166207d67e8b92730"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/onecentlin/laravel-adminer/zipball/a3b94d480326a3db0b5b2eb166207d67e8b92730",
+                "reference": "a3b94d480326a3db0b5b2eb166207d67e8b92730",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.0|~6.0|~7.0|~8.0",
+                "illuminate/routing": "~5.0|~6.0|~7.0|~8.0",
+                "illuminate/support": "~5.0|~6.0|~7.0|~8.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Onecentlin\\Adminer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Winnie Lin",
+                    "email": "onecentlin@gmail.com"
+                }
+            ],
+            "description": "Laravel Adminer Database Manager",
+            "keywords": [
+                "adminer",
+                "database",
+                "laravel5",
+                "laravel6",
+                "laravel7",
+                "laravel8",
+                "management",
+                "mysql",
+                "sqlite"
+            ],
+            "support": {
+                "issues": "https://github.com/onecentlin/laravel-adminer/issues",
+                "source": "https://github.com/onecentlin/laravel-adminer/tree/master"
+            },
+            "time": "2020-09-05T06:49:22+00:00"
         },
         {
             "name": "phar-io/manifest",
